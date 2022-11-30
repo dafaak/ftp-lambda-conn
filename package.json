@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "basic-ftp": "^5.0.2"
+    "basic-ftp": "^5.0.2",
+    "@types/aws-lambda": "^8.10.108",
+    "aws-sdk": "^2.1245.0"
   },
   "devDependencies": {
     "ts-node": "10.7.0",
