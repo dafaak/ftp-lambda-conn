@@ -1,5 +1,6 @@
 import * as ftp from "basic-ftp"
 import * as lambda from 'aws-lambda';
+import * as fs from 'fs';
 
 exports.handler = async (event: lambda.APIGatewayProxyEvent, serverlessContext: lambda.Context) => {
   serverlessContext.callbackWaitsForEmptyEventLoop = false
@@ -24,14 +25,18 @@ async function example() {
       password: "rNrKYTX9g7z3RgJRmxWuGHbeu",
       secure: false
     })
-    console.log(await client.list())
-    // await client.uploadFrom("README.txt", "README_FTP.txt")
-    // await client.downloadTo("README_COPY.txt", "README_FTP.txt")
-    res = {status: 200, body: {mensaje: 'Todo ok!'}}
+    await client.uploadFrom("README.txt", "README_FTP.txt")
+    await client.downloadTo("/tmp/README_COPY.txt", "README_FTP.txt")
+    console.log(leerArchivoDeTmp('README_COPY.txt'));
+
   } catch (err) {
     res = {status: 500, body: {mensaje: 'Algo salio mal!:', err}}
     console.log(err)
   }
   client.close()
   return res;
+}
+
+function leerArchivoDeTmp(nombreArchivo: string) {
+  return fs.readFileSync(`/tmp/${nombreArchivo}`, 'utf-8');
 }

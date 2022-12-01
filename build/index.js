@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var ftp = require("basic-ftp");
+var fs = require("fs");
 exports.handler = function (event, serverlessContext) { return __awaiter(void 0, void 0, void 0, function () {
     var res, e_1;
     return __generator(this, function (_a) {
@@ -59,16 +60,16 @@ exports.handler = function (event, serverlessContext) { return __awaiter(void 0,
 }); };
 function example() {
     return __awaiter(this, void 0, void 0, function () {
-        var client, res, _a, _b, err_1;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var client, res, err_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
                     client = new ftp.Client();
                     client.ftp.verbose = true;
                     res = {};
-                    _c.label = 1;
+                    _a.label = 1;
                 case 1:
-                    _c.trys.push([1, 6, , 7]);
+                    _a.trys.push([1, 5, , 6]);
                     return [4 /*yield*/, client.access({
                             host: "ftp.dlptest.com",
                             user: "dlpuser",
@@ -76,29 +77,28 @@ function example() {
                             secure: false
                         })];
                 case 2:
-                    _c.sent();
-                    _b = (_a = console).log;
-                    return [4 /*yield*/, client.list()];
-                case 3:
-                    _b.apply(_a, [_c.sent()]);
+                    _a.sent();
                     return [4 /*yield*/, client.uploadFrom("README.txt", "README_FTP.txt")];
+                case 3:
+                    _a.sent();
+                    return [4 /*yield*/, client.downloadTo("/tmp/README_COPY.txt", "README_FTP.txt")];
                 case 4:
-                    _c.sent();
-                    return [4 /*yield*/, client.downloadTo("README_COPY.txt", "README_FTP.txt")];
+                    _a.sent();
+                    console.log(leerArchivoDeTmp('README_COPY.txt'));
+                    return [3 /*break*/, 6];
                 case 5:
-                    _c.sent();
-                    res = { status: 200, body: { mensaje: 'Todo ok!' } };
-                    return [3 /*break*/, 7];
-                case 6:
-                    err_1 = _c.sent();
+                    err_1 = _a.sent();
                     res = { status: 500, body: { mensaje: 'Algo salio mal!:', err: err_1 } };
                     console.log(err_1);
-                    return [3 /*break*/, 7];
-                case 7:
+                    return [3 /*break*/, 6];
+                case 6:
                     client.close();
                     return [2 /*return*/, res];
             }
         });
     });
+}
+function leerArchivoDeTmp(nombreArchivo) {
+    return fs.readFileSync("/tmp/".concat(nombreArchivo), 'utf-8');
 }
 //# sourceMappingURL=index.js.map
