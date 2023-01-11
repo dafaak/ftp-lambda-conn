@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "basic-ftp": "^5.0.2"
+    "basic-ftp": "^5.0.2",
+    "ssh2-sftp-client": "^9.0.4"
   },
   "devDependencies": {
     "ts-node": "10.7.0",
